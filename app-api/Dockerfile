@@ -1,10 +1,24 @@
-FROM python:3.11.6-slim-bookworm
+FROM python:3.11.8-slim-bookworm as base
 
-RUN pip install poetry==1.7.1
+RUN apt-get update
+RUN apt-get -y dist-upgrade
 
-WORKDIR /app
+FROM base as requirements
 
-COPY pyproject.toml poetry.lock .
+RUN python3.11 -m pip install -U pip setuptools && \
+    python3.11 -m pip install poetry==1.8.3
 
-RUN poetry config virtualenvs.create false && \
-    poetry install
+COPY app-api/pyproject.toml app-api/poetry.lock .
+RUN poetry export -f requirements.txt --without-hashes -o /requirements.txt 
+
+FROM base as app
+
+WORKDIR /usr/src/app
+
+COPY --from=requirements /requirements.txt . 
+
+RUN python3.11 -m pip install --no-cache-dir -r requirements.txt
+
+RUN apt-get purge -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*

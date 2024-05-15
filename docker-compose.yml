@@ -1,0 +1,24 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: app-api/Dockerfile
+
+    ports:
+      - 5000:5000
+    user: root
+    working_dir: /usr/src/app
+    # command: uvicorn app:app --host 0.0.0.0 --port 5000
+    command: granian --interface asgi . --host 0.0.0.0 --port 5000
+    volumes:
+      - ./app-api/app:/usr/src/app
+    # env_file:
+    #   - .env
+  # db:
+  #   # image: ankane/pgvector
+  #   env_file:
+  #     - .env
+  #   build:
+  #     context: .
+  #     dockerfile: db.Dockerfile
