@@ -1,24 +1,65 @@
 version: '3'
+
+x-app-common:
+
+  &app-common
+  env_file:
+    - .env
+  depends_on:
+
+    &app-common-depends-on
+    - redis
+
 services:
   app:
     build:
       context: .
       dockerfile: app-api/Dockerfile
-
-    ports:
-      - 5000:5000
     user: root
     working_dir: /usr/src/app
     # command: uvicorn app:app --host 0.0.0.0 --port 5000
     command: granian --interface asgi . --host 0.0.0.0 --port 5000
+    ports:
+      - 5000:5000
     volumes:
       - ./app-api/app:/usr/src/app
-    # env_file:
-    #   - .env
-  # db:
-  #   # image: ankane/pgvector
-  #   env_file:
-  #     - .env
-  #   build:
-  #     context: .
-  #     dockerfile: db.Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+  r-api:
+    build:
+      context: .
+      dockerfile: app-r-api/Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app-r-api/R:/usr/src/R
+    env_file:
+      - .env
+    depends_on:
+      - app
+    # stdin_open: true
+    # tty: true
+    # entrypoint: bash
+  postgres:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    env_file:
+      - .env
+  redis:
+    image: redis:7.2.4-bookworm
+    restart: always
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    # healthcheck:
+    #   test: redis-cli ping
+    #   interval: 1s
+    #   timeout: 3s
+    #   retries: 50

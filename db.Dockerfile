@@ -1,4 +1,4 @@
-FROM postgres:16.1-bookworm
+FROM postgres:16.3-bookworm
 
 
 RUN apt-get update \
@@ -9,6 +9,6 @@ RUN apt-get install postgresql-server-dev-16 -y
 
 WORKDIR /tmp
 RUN git clone --branch v0.5.1 https://github.com/pgvector/pgvector.git
-WORKDIR pgvector
+WORKDIR /tmp/pgvector
 # RUN make
 RUN make install

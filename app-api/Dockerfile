@@ -8,7 +8,7 @@ FROM base as requirements
 RUN python3.11 -m pip install -U pip setuptools && \
     python3.11 -m pip install poetry==1.8.3
 
-COPY app-api/pyproject.toml app-api/poetry.lock .
+COPY app-api/pyproject.toml app-api/poetry.lock ./
 RUN poetry export -f requirements.txt --without-hashes -o /requirements.txt 
 
 FROM base as app
