@@ -10,13 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.40.0",
+    "@tanstack/react-router": "^1.32.5",
+    "@tanstack/react-table": "^8.17.3",
+    "@tanstack/router-devtools": "^1.32.5",
+    "@tanstack/router-vite-plugin": "^1.32.2",
+    "csstype": "^3.0.10",
+    "goober": "^2.1.14",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.4",
-    "@tanstack/react-table": "^8.17.3",
-    "@tanstack/react-router": "^1.32.5",
-    "@tanstack/router-vite-plugin": "^1.32.2",
-    "@tanstack/router-devtools": "^1.32.5"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
