@@ -20,6 +20,11 @@ SQLAlchemy = "^2.0.30"
 psycopg = "^3.1.19"
 scikit-learn = "^1.5.0"
 librosa = "^0.10.2.post1"
+notebook = "^7.2.0"
+ipykernel = "^6.29.4"
+sentence-transformers = "^3.0.0"
+pyparsing = "^3.1.2"
+nltk = "^3.8.1"
 
 
 [build-system]
