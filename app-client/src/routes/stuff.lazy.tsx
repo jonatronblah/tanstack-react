@@ -1,9 +1,22 @@
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { useState } from "react";
 
-export const Route = createLazyFileRoute('/stuff')({
+import { createLazyFileRoute } from "@tanstack/react-router";
+
+import { Calendar } from "@/components/ui/calendar";
+
+export const Route = createLazyFileRoute("/stuff")({
   component: Stuff,
-})
+});
 
 function Stuff() {
-  return <div className="p-2">Hello from STUFF!</div>
+  const [date, setDate] = useState<Date | undefined>(new Date());
+
+  return (
+    <Calendar
+      mode="single"
+      selected={date}
+      onSelect={setDate}
+      className="rounded-md border"
+    />
+  );
 }

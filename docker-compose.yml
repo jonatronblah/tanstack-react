@@ -28,7 +28,8 @@ services:
       dockerfile: app-client/Dockerfile
       target: dev
     volumes:
-      - client_bulksearch-web-data:/usr/src/app  
+      - ./app-client:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
     ports:
       - 5173:5173
   app:
@@ -87,7 +88,7 @@ services:
 volumes:
   client_bulksearch-db-data:
     name: client_bulksearch-db-data
-  client_bulksearch-web-data:
-    name: client_bulksearch-web-data  
+  # client_bulksearch-web-data:
+  #   name: client_bulksearch-web-data  
   node_modules:
     name: node_modules
