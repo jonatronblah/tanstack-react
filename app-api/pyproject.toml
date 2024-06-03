@@ -25,6 +25,7 @@ ipykernel = "^6.29.4"
 sentence-transformers = "^3.0.0"
 pyparsing = "^3.1.2"
 nltk = "^3.8.1"
+pgvector = "^0.2.5"
 
 
 [build-system]
