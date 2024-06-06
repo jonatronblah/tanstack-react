@@ -6,7 +6,7 @@ RUN npm update -g yarn
 
 WORKDIR /usr/src/app
 
-COPY app-client/package.json app-client/yarn.lock ./
+COPY client/package.json client/yarn.lock ./
 RUN yarn install
 
 FROM build as dev

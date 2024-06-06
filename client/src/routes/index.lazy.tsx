@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 
-import { ContentLayout } from "@/components/layouts/layout";
+// import { ContentLayout } from "@/components/layouts/layout";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -8,10 +8,10 @@ export const Route = createLazyFileRoute("/")({
 
 function Index() {
   return (
-    <ContentLayout title="Home">
+    // <ContentLayout title="Home">
       <div className="p-2">
         <h3>Welcome Home!</h3>
       </div>
-    </ContentLayout>
+    // </ContentLayout>
   );
 }

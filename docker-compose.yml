@@ -25,17 +25,17 @@ services:
   client:
     build:
       context: .
-      dockerfile: app-client/Dockerfile
+      dockerfile: client/Dockerfile
       target: dev
     volumes:
-      - ./app-client:/usr/src/app
+      - ./client:/usr/src/app
       - node_modules:/usr/src/app/node_modules
     ports:
       - 5173:5173
   app:
     build:
       context: .
-      dockerfile: app-api/Dockerfile
+      dockerfile: api/Dockerfile
     user: root
     working_dir: /usr/src/app
     # command: uvicorn app:app --host 0.0.0.0 --port 5000
@@ -43,18 +43,20 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ./app-api/app:/usr/src/app
+      - ./api/app:/usr/src/app
     env_file:
       - .env
     depends_on:
       - redis
       - postgres
   postgres:
-    build:
-      context: .
-      dockerfile: db.Dockerfile
+    image: pgvector/pgvector:pg16
     env_file:
       - .env
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
   redis:
     image: redis:7.2.4-bookworm
     restart: always
