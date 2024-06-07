@@ -71,21 +71,28 @@ services:
     #   interval: 1s
     #   timeout: 3s
     #   retries: 50
-# r-api:
-  #   build:
-  #     context: .
-  #     dockerfile: app-r-api/Dockerfile
-  #   ports:
-  #     - 8000:8000
-  #   volumes:
-  #     - ./app-r-api/R:/usr/src/R
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - app
-  #   stdin_open: true
-  #   tty: true
-  #   entrypoint: bash
+gpu:
+    build:
+      context: .
+      dockerfile: gpu/Dockerfile
+    image: musicgen-worker:latest
+    volumes:
+      - ./musicgen/tasks.py:/usr/src/app/tasks.py
+      - ./musicgen/models:/models
+      - temp_shared:/temp_shared
+    working_dir: /usr/src/app
+    command: bash -c "celery -A tasks worker -P gevent -Q musicgen --concurrency=16 --loglevel=info"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
 
 volumes:
   client_bulksearch-db-data:
