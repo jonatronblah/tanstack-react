@@ -71,7 +71,7 @@ services:
     #   interval: 1s
     #   timeout: 3s
     #   retries: 50
-gpu:
+  gpu:
     build:
       context: .
       dockerfile: gpu/Dockerfile
