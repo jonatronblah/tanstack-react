@@ -20,9 +20,9 @@ pyg_lib = {version = "0.4.0", source = "torch_geo_opt"}
 llama-cpp-python = {version = "0.2.77", source = "llama-cpp"}
 bertopic = "^0.16.2"
 celery = "^5.4.0"
-redis = { version = "^5.0.5", extras = ["hiredis"] }
+redis = { version = "^5.0.5", extras = ["hiredis"] } 
 gevent = "^23.9.1"
-
+huggingface-hub = "^0.23.3"
 
 [[tool.poetry.source]]
 name = "pytorch"
