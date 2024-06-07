@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.0.1-cudnn8-runtime-ubuntu22.04 as base
+FROM nvidia/cuda:12.1.0-cudnn8-runtime-ubuntu22.04 as base
 
 ENV POETRY_VERSION=1.8.3
 ENV POETRY_HOME=/gpu_backend/poetry

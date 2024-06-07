@@ -75,11 +75,9 @@ services:
     build:
       context: .
       dockerfile: gpu/Dockerfile
-    image: musicgen-worker:latest
+    # image: musicgen-worker:latest
     volumes:
       - ./musicgen/tasks.py:/usr/src/app/tasks.py
-      - ./musicgen/models:/models
-      - temp_shared:/temp_shared
     working_dir: /usr/src/app
     command: bash -c "celery -A tasks worker -P gevent -Q musicgen --concurrency=16 --loglevel=info"
     env_file:
