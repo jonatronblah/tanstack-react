@@ -15,45 +15,34 @@ RUN apt-get update && \
     apt-get install -y libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt-get install -y python3.11 python3-pip
-# maybe...
-# apt-get install nvidia-cuda-toolkit
+
 
 FROM base as requirements
 
 RUN python3.11 -m pip install -U pip setuptools && \
     python3.11 -m pip install poetry==${POETRY_VERSION}
 
-# COPY pyproject.toml ./ 
-# RUN poetry config virtualenvs.create false && \
-#     poetry export -f requirements.txt --without-hashes -o /requirements.txt 
-
-COPY pyproject.toml poetry.lock ./ 
-RUN poetry export -f requirements.txt --without-hashes -o /requirements.txt 
-
-FROM base as app
-RUN python3.11 -m pip install -U pip setuptools
-# ENV SETUPTOOLS_USE_DISTUTILS=stdlib
-COPY --from=requirements /requirements.txt . 
-# torch==2.1.0 ; python_version >= "3.11" and python_version < "4.0"
-RUN python3.11 -m pip install --no-cache-dir torch==2.1.0
-# new build here?
-RUN python3.11 -m pip install --no-cache-dir -r requirements.txt
-
-###
-# if using poetry's virtualenv
-
-# RUN apt install python3.11-venv && \
-#     apt-get update
-
-# RUN python3.11 -m venv $POETRY_VENV \
-#     && $POETRY_VENV/bin/pip install --upgrade pip \
-# 	&& $POETRY_VENV/bin/pip install -U pip setuptools \
-# 	&& $POETRY_VENV/bin/pip install poetry==${POETRY_VERSION}
-# ENV PATH="${PATH}:${POETRY_VENV}/bin"
-###
 
 
-# COPY . /gpu_backend/
+COPY gpu/pyproject.toml gpu/poetry.lock ./ 
+RUN poetry config virtualenvs.create false
+RUN poetry install
+
+# RUN poetry export -f requirements.txt --without-hashes -o /requirements.txt 
+
+# FROM base as app
+# RUN python3.11 -m pip install -U pip setuptools
+
+# COPY --from=requirements /requirements.txt . 
+
+# RUN python3.11 -m pip install --no-cache-dir -r requirements.txt
+
+
+# RUN pip install llama-cpp-python \
+#     --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu121
+
+
+
 
 RUN apt-get purge -y \
     gcc \

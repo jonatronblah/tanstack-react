@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: nginx.Dockerfile
     depends_on:
-      - app
+      - api
       - client
     volumes:
       -  ./nginx.conf:/etc/nginx/conf.d/nginx.conf
@@ -32,7 +32,7 @@ services:
       - node_modules:/usr/src/app/node_modules
     ports:
       - 5173:5173
-  app:
+  api:
     build:
       context: .
       dockerfile: api/Dockerfile
@@ -75,11 +75,11 @@ services:
     build:
       context: .
       dockerfile: gpu/Dockerfile
-    # image: musicgen-worker:latest
+    # image: nvcr.io/nvidia/pyg:24.05-py3
     volumes:
-      - ./musicgen/tasks.py:/usr/src/app/tasks.py
+      - ./gpu/tasks.py:/usr/src/app/tasks.py
     working_dir: /usr/src/app
-    command: bash -c "celery -A tasks worker -P gevent -Q musicgen --concurrency=16 --loglevel=info"
+    command: bash -c "celery -A tasks worker -P gevent --concurrency=16 --loglevel=info"
     env_file:
       - .env
     depends_on:

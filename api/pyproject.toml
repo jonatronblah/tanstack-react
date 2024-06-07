@@ -13,10 +13,9 @@ granian = { version = "^1.4.1", extras = ["reload"] }
 SQLAlchemy = "^2.0.30"
 psycopg = {extras = ["binary"], version = "^3.1.19"}
 notebook = "^7.2.0"
-sentence-transformers = "^3.0.0"
 pgvector = "^0.2.5"
-celery = "^5.3.4"
-redis = { version = "^4.6.0", extras = ["hiredis"] }
+celery = "^5.4.0"
+redis = { version = "^5.0.5", extras = ["hiredis"] }
 gevent = "^23.9.1"
 
 [build-system]
