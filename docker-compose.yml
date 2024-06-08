@@ -44,6 +44,7 @@ services:
       - 5000:5000
     volumes:
       - ./api/app:/usr/src/app
+      - ./gpu/tasks.py:/usr/src/app/tasks.py
     env_file:
       - .env
     depends_on:

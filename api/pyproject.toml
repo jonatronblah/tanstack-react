@@ -17,6 +17,7 @@ pgvector = "^0.2.5"
 celery = "^5.4.0"
 redis = { version = "^5.0.5", extras = ["hiredis"] }
 gevent = "^23.9.1"
+pandas = "^2.2.2"
 
 [build-system]
 requires = ["poetry-core"]

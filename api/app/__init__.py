@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from app.tasks import process
+
 app = FastAPI(root_path='/api/v1')
 
 
