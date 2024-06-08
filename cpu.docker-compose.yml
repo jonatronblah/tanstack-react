@@ -1,0 +1,79 @@
+version: '3'
+
+x-app-common:
+
+  &app-common
+  env_file:
+    - .env
+  depends_on:
+
+    &app-common-depends-on
+    - redis
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    depends_on:
+      - api
+      - client
+    volumes:
+      -  ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+    ports:
+      - 80:80
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+      target: dev
+    volumes:
+      - ./client:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    ports:
+      - 5173:5173
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    user: root
+    working_dir: /usr/src/app
+    # command: uvicorn app:app --host 0.0.0.0 --port 5000
+    command: granian --interface asgi . --host 0.0.0.0 --port 5000 --url-path-prefix api/v1/ --reload
+    ports:
+      - 5000:5000
+    volumes:
+      - ./api/app:/usr/src/app
+      - ./gpu/tasks.py:/usr/src/app/tasks.py
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+  postgres:
+    image: pgvector/pgvector:pg16
+    env_file:
+      - .env
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+  redis:
+    image: redis:7.2.4-bookworm
+    restart: always
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    # healthcheck:
+    #   test: redis-cli ping
+    #   interval: 1s
+    #   timeout: 3s
+    #   retries: 50
+
+
+volumes:
+  node_modules:
+    name: node_modules
