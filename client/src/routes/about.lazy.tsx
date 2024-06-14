@@ -1,13 +1,19 @@
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createLazyFileRoute } from "@tanstack/react-router";
 
-import { SingleFileUploader } from '../components/functions/upload'
+import { useFetchApi } from "@/components/features/generic/queries";
 
-export const Route = createLazyFileRoute('/about')({
+export const Route = createLazyFileRoute("/about")({
   component: About,
-})
+});
 
 function About() {
-  return <div>
-    <SingleFileUploader />
-  </div>
+  const data = useFetchApi("hello");
+  const data2 = useFetchApi("goodbye");
+
+  return (
+    <div>
+      {data}
+      {data2}
+    </div>
+  );
 }
