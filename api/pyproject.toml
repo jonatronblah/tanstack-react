@@ -18,6 +18,7 @@ celery = "^5.4.0"
 redis = { version = "^5.0.5", extras = ["hiredis"] }
 gevent = "^23.9.1"
 pandas = "^2.2.2"
+fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
 
 [build-system]
 requires = ["poetry-core"]
