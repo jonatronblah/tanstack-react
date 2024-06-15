@@ -2,7 +2,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 
 import { useFetchApi } from "@/components/features/generic/queries";
 
-export const Route = createLazyFileRoute("/about")({
+export const Route = createLazyFileRoute("/test")({
   component: About,
 });
 
