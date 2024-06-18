@@ -20,6 +20,8 @@ gevent = "^23.9.1"
 pandas = "^2.2.2"
 fastapi-users = { extras = ["sqlalchemy"], version = "^13.0.0" }
 pydantic-settings = "^2.3.3"
+alembic = "^1.13.1"
+ipykernel = "^6.29.4"
 
 [build-system]
 requires = ["poetry-core"]

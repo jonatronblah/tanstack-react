@@ -1,3 +1,4 @@
 from .base import Base
-
-from .schema import DocSchema
+from .collections import Collection
+from .documents import Document
+from .schema import CollectionSchema, DocumentSchema
