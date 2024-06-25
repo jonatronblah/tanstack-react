@@ -21,7 +21,7 @@ class Document(Base):
     id: Mapped[int] = mapped_column(
         "id", autoincrement=True, nullable=False, unique=True, primary_key=True
     )
-    embedding: Vector = mapped_column("embedding", Vector(384))
+    embedding: Mapped[Vector] = mapped_column("embedding", Vector(384))
 
     doc_text = mapped_column("doc_text", String())
 

@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 from datetime import datetime
 from app.models import CollectionSchema
+
+from app.basemodel import BaseModel
 
 
 class CreateCollectionRequest(BaseModel):

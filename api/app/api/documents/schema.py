@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 from pgvector.sqlalchemy import Vector
 
 from app.models import DocumentSchema
+from app.basemodel import BaseModel
 
 
 class CreateDocumentRequest(BaseModel):

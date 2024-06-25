@@ -1,6 +1,8 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import ConfigDict
 from datetime import date
 from pgvector.sqlalchemy import Vector
+
+from app.basemodel import BaseModel
 
 
 class DocumentSchema(BaseModel):
